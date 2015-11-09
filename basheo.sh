@@ -10,6 +10,8 @@ function random_chromosome(){
 }
 
 
+
+
 # Computes maxOnes fitness
 function compute_fitness(){
   echo $(echo "$1" | grep -o "1" | wc -l)
@@ -18,11 +20,18 @@ function compute_fitness(){
 
 # Mutate all chromosomes in the population
 function mutate1(){
+  local chromosome=$1
+  local mutation_point=$((RANDOM % ${#chromosome} ))
+  mutie=${chromosome:0:$mutation_point}
 
+  if [chromosome[$mutation_point]==1]; then
+    mutie=$mutie""0
+  else
+    mutie=$mutie""1
+  fi
+
+  mutie=$mutie""${chromosome:$(($mutation_point+1)):$((${#chromosome}-$mutation_point))}
+  echo $mutie
 }
 
-
-chromosome=$(random_chromosome 10)
-ones=$(compute_fitness 1001)
-echo $ones
 
