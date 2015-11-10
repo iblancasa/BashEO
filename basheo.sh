@@ -11,7 +11,9 @@ function random_chromosome(){
 
 # Computes maxOnes fitness
 function compute_fitness(){
-  echo $(echo "$1" | grep -o "1" | wc -l)
+    string=$1
+    ones=${string//0/}
+    echo ${#ones}
 }
 
 
