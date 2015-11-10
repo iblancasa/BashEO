@@ -10,8 +10,6 @@ function random_chromosome(){
 }
 
 
-
-
 # Computes maxOnes fitness
 function compute_fitness(){
   echo $(echo "$1" | grep -o "1" | wc -l)
@@ -34,4 +32,25 @@ function mutate1(){
   echo $mutie
 }
 
+# Crossover
+function crossover(){
+  chrom1=$1
+  chrom2=$2
+
+  length=${#chrom1}
+  xover_point=$((RANDOM % $length ))
+  scope=$((1+$((RANDOM % $(($length-$xover_point)) ))))
+
+  new_chrom1=${chrom1:0:$xover_point}
+  new_chrom2=${chrom2:0:$xover_point}
+
+  new_chrom1=$new_chrom1""${chrom2:$xover_point:$(($xover_point+$scope))}
+  new_chrom2=$new_chrom2""${chrom1:$xover_point:$(($xover_point+$scope))}
+
+  new_chrom1=$new_chrom1""${chrom1:$(($xover_point+$scope)):$(($length-1))}
+  new_chrom2=$new_chrom2""${chrom2:$(($xover_point+$scope)):$(($length-1))}
+
+  echo $new_chrom1" "$new_chrom2
+
+}
 
